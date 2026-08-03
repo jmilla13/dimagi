@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Normalized Data</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 2rem;
+      }
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+        max-width: 900px;
+        margin: 0 auto;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+      .btn {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-weight: bold;
+      }
+      .table-wrapper {
+        overflow: auto;
+        flex: 1 1 auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+      }
+      th, td {
+        text-align: left;
+        padding: 0.75rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      th { background: #f8fafc; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <h1>Normalized Data</h1>
+        <a class="btn" href="/">Back to home</a>
+      </div>
+      {% if submissions %}
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Location</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Local time</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for submission in submissions %}
+            <tr>
+              <td>{{ submission.email }}</td>
+              <td>{{ submission.location }}</td>
+              <td>{{ submission.latitude }}</td>
+              <td>{{ submission.longitude }}</td>
+              <td>{{ submission.local_time|default:"Unavailable" }}{% if submission.timezone_name %} ({{ submission.timezone_name }}){% endif %}</td>
+              <td>{{ submission.created_at }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No submissions yet.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
